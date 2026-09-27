@@ -115,25 +115,4 @@ while `app.py` is running. It will:
 
 No build step, no npm — it's a single static HTML file.
 
-## Notes for your report / viva
 
-- **Why MFCCs?** They compress a raw waveform into a small set of
-  coefficients that closely track how the human ear perceives timbre and
-  pitch — the standard front-end for speech and speech-emotion tasks
-  before deep audio embeddings became common.
-- **Why an MLP and not a CNN/RNN?** Once you summarize a clip into
-  fixed-length statistics (mean/std of MFCCs + deltas + pitch + energy),
-  the temporal structure is already folded in, so a plain deep MLP on
-  top is a strong, fast, easy-to-explain baseline — appropriate for a
-  course project and for low-latency inference in a live pipeline.
-- **From emotion to "frustration/urgency":** raw emotion labels aren't
-  directly actionable for a call center, so `emotions.py` maps each of
-  the 8 emotions to a frustration/urgency prior and combines it with the
-  model's own predicted probabilities (not just the top-1 label) into a
-  continuous 0–1 score with LOW/MEDIUM/HIGH bands — this is the part
-  that actually answers the problem statement.
-- **Limitations to mention:** trained on acted/scripted emotional speech
-  (RAVDESS), so accuracy on natural, spontaneous call-center speech will
-  be lower; a production system would fine-tune on real, labeled call
-  audio and likely add a pretrained speech embedding (e.g. wav2vec 2.0)
-  as an additional feature.
